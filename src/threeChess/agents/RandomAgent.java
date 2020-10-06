@@ -39,12 +39,17 @@ public class RandomAgent extends Agent{
     Position start = pieces[0];
     Position end = pieces[0]; //dummy illegal move
     while (!board.isLegalMove(start, end)){
+      // Picks a random piece
       start = pieces[random.nextInt(pieces.length)];
       Piece mover = board.getPiece(start);
+      // Generates all the directions allowed for that piece to move
       Direction[][] steps = mover.getType().getSteps();
+      // Choose a specific direction
       Direction[] step = steps[random.nextInt(steps.length)];
+      // And randomly choose how many times the step from the direction will be repeated
       int reps = 1 + random.nextInt(mover.getType().getStepReps());
       end = start;
+      
       try{
         for(int i = 0; i<reps; i++)
           end = board.step(mover, step, end, start.getColour()!=end.getColour());
